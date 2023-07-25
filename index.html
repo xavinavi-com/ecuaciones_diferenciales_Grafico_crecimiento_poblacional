@@ -1,0 +1,346 @@
+
+<!doctype html>
+<html>
+
+<head>
+	<title>Line Chart</title>
+	<script src="./src/Chart.bundle.js"></script>
+	<script src="./src/utils.js"></script>
+	<link rel="stylesheet" href="src/bootstrap.min.css" >
+
+	<style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body class="container">
+
+		<br>
+
+
+			<div class="row">
+					<!-- Post Content Column -->
+					<div class="col-lg-12">
+			
+					  <!-- Title -->
+					  <h1 class="mt-6">ECUACIONES DIFERENCIALES</h1>
+			
+					  <!-- Author -->
+					  <p class="lead">
+						POR
+						<a href="#">grupo Nº 13</a>
+					  </p>
+			
+					  <hr>
+					  </div>
+					  </div>
+</br>
+<div class="row">
+  <div class="col-sm-8">
+    <div class="card">
+      <div class="card-body">
+	  		<br>
+
+        <h3 class="card-title">Grafico de crecimiento poblacional</h3>
+				<br>
+
+        <p class="card-text">
+<div >
+		<canvas id="canvas"></canvas>
+	</div>		
+		</p>
+
+		<br>
+<button  class="btn btn-primary"  hidden id="randomizeData">Randomize Data</button>
+	<button class="btn btn-outline-primary" hidden id="addDataset">Add Dataset</button>
+	<button  class="btn btn-info" id="removeDataset">Quitar Grafico </button>
+	<button  class="btn btn-success" id="addData">Añadir Año </button>
+	<button class="btn btn-warning" id="removeData">Quitar Año </button>      </div>
+	<br>		<br>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">DATOS</h5>
+		<hr>
+
+		<div>
+			<label > ingrese la capacidad </label>
+			<input id="capacidad" class="form-control ds-input" type="number"></input>
+		</div>
+
+		<div>
+			<label > ingrese el Poblacion Actual </label>
+			<input id="poblacionActual" class="form-control ds-input" type="number"></input>
+		</div>	
+		<div>
+				<label > ingrese el Crecimiento Anual en (%) </label>
+				<input id="crecimientoAnual" class="form-control ds-input" type="number"></input>
+		</div>
+
+		<div>
+			<label > ingrese el tiempo </label>
+			<input id="tiempo" class="form-control ds-input" type="number"></input>
+		</div>
+		<br>
+		<button class="btn btn-primary"   onclick="CALCULAR()" >CALCULAR</button>
+
+	
+	
+		<div>
+				<hr>
+				<h3> el resultado es: 
+				<input id="resultado" class="form-control ds-input" readonly=true value="....." type="number"></input> 
+				</br><input id="resultado2" class="form-control ds-input" readonly=true value="....." type="number"></input> 
+				</h3>
+				
+			</div>    
+		</div>
+    </div>
+  </div>
+</div>
+
+	
+	<br>
+	<br>
+	
+	
+	</br>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+
+		
+		var MONTHS = [
+		 ' 	',
+ ' 	2019',
+ ' 	2020',
+ ' 	2021',
+ ' 	2022',
+ ' 	2023',
+ ' 	2024',
+ ' 	2025',
+ ' 	2026',
+ ' 	2027',
+ ' 	2028',
+ ' 	2029',
+ ' 	2030',
+ ' 	2031',
+ ' 	2032',
+ ' 	2033',
+ ' 	2034',
+ ' 	2035',
+ ' 	2036',
+ ' 	2037'
+
+		
+		];
+		var config = {
+			type: 'line',
+			data: {
+				labels: ['','2018', '2019', '2020', '2021', '2022', '2023', '2024','2025','2026'],
+				datasets: [{
+					label: 'My First dataset',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+					fill: false,
+				}, {
+					label: 'My Second dataset',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Chart.js Line Chart'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						}
+					}]
+				}
+			}
+		};
+
+
+/***********
+			VARIABLES DE FUNCION
+
+	let capacidad;
+	let poblacionAcatual;
+	let crecimientoAnual;
+	let tiempo;
+
+
+*/
+
+	let capacidad;
+	let poblacionActual;
+	let crecimientoAnual;
+	let tiempo;
+
+
+		function CALCULAR(){
+			capacidad = document.getElementById('capacidad').value;
+			 poblacionActual = document.getElementById('poblacionActual').value;
+			 crecimientoAnual = document.getElementById('crecimientoAnual').value/100;
+			 tiempo = document.getElementById('tiempo').value;
+			
+			// calculando variable
+			 A=capacidad-poblacionActual;
+
+			// calculando resultado
+			 var resultado=capacidad - (A*  Math.pow(Math.E, -crecimientoAnual*tiempo));
+			 console.log(resultado);
+			 $("#resultado").val(resultado);
+			 $("#resultado2").val(Math.round(resultado));
+
+			//************ aplicando grafico*************
+			var colorName = colorNames[config.data.datasets.length % colorNames.length];
+			var newColor = window.chartColors[colorName];
+			var newDataset = {
+				label: 'Dataset ' + config.data.datasets.length,
+				backgroundColor: newColor,
+				borderColor: newColor,
+				data: [12],
+				fill: false
+			};
+
+			for (var index = 0; index < 20; ++index) {
+
+			var data=capacidad - (A*  Math.pow(Math.E, -crecimientoAnual*index))
+ 				newDataset.data.push(data);
+			}
+
+			config.data.datasets.push(newDataset);
+			window.myLine.update();
+	
+	
+		}
+
+
+
+		window.onload = function() {
+
+					
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myLine = new Chart(ctx, config);
+			config.data.datasets.splice(0, 1);
+			config.data.datasets.splice(0, 2);
+
+			window.myLine.update();
+
+		};
+
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			config.data.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return randomScalingFactor();
+				});
+
+			});
+
+			window.myLine.update();
+		});
+
+		var colorNames = Object.keys(window.chartColors);
+		document.getElementById('addDataset').addEventListener('click', function() {
+			var colorName = colorNames[config.data.datasets.length % colorNames.length];
+			var newColor = window.chartColors[colorName];
+			var newDataset = {
+				label: 'dato' + config.data.datasets.length,
+				backgroundColor: newColor,
+				borderColor: newColor,
+				data: [12],
+				fill: false
+			};
+
+			for (var index = 0; index < 20; ++index) {
+
+			var data=600 - (350*  Math.pow(Math.E, -0.12*index))
+ 				newDataset.data.push(data);
+			}
+
+			config.data.datasets.push(newDataset);
+			window.myLine.update();
+		});
+
+		//*********************************************
+		
+		
+		document.getElementById('addData').addEventListener('click', function() {
+			if (config.data.datasets.length > 0) {
+				var month = MONTHS[config.data.labels.length % MONTHS.length];
+				config.data.labels.push(month);
+
+				config.data.datasets.forEach(function(dataset) {
+					dataset.data.push(randomScalingFactor());
+				});
+
+				window.myLine.update();
+			}
+		});
+
+		document.getElementById('removeDataset').addEventListener('click', function() {
+			config.data.datasets.splice(0, 1);
+			window.myLine.update();
+		});
+
+		document.getElementById('removeData').addEventListener('click', function() {
+			config.data.labels.splice(-1, 1); // remove the label first
+
+			config.data.datasets.forEach(function(dataset) {
+				dataset.data.pop();
+			});
+
+			window.myLine.update();
+		});
+	</script>
+</body>
+
+</html>
