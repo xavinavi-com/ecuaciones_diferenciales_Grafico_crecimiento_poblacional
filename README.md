@@ -1,12 +1,11 @@
-# ecuaciones_diferenciales_Grafico_crecimiento_poblacional
 
-## Grafico de crecimiento poblacional
+# Grafico de crecimiento poblacional usando ecuaciones diferenciales Separables
 
-# OBJETIVO
+## OBJETIVO
 Desarrollar un programa para visualizar gráficamente el incremento poblacional de la manada de 
 Periquito (Forpus passerinus) El Parque Machía
 
-# SITUACION PROBLEMÁTICA
+## SITUACION PROBLEMÁTICA
 El Parque Machía, un Centro de Custodia de Fauna Silvestre de propiedad del estado, tiene una 
 manada de Periquito (Forpus passerinus)
 es una especie de ave de la familia de los loros (Psittacidae). Es típico en zonas tropicales y
